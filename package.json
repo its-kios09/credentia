@@ -1,0 +1,56 @@
+{
+  "name": "credentia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Real-time, cross-border professional credential verification built on Amazon Aurora DSQL and Next.js. Confirm any license instantly and identically worldwide, with revocations visible the moment they happen.",
+  "author": "Fredrick Kioko <kilonzokioko10@gmail.com> (https://github.com/its-kios09)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/its-kios09/credentia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/its-kios09/credentia/issues"
+  },
+  "homepage": "https://github.com/its-kios09/credentia#readme",
+  "keywords": [
+    "credential-verification",
+    "license-verification",
+    "aurora-dsql",
+    "aws",
+    "multi-region",
+    "strong-consistency",
+    "nextjs",
+    "prisma",
+    "vercel",
+    "healthcare"
+  ],
+  "engines": {
+    "node": ">=18.18"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "db:health": "tsx src/db/health.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "echo 'Use the aurora-dsql-prisma CLI to generate + apply DSQL-compatible migrations see its README for the exact command' && exit 1",
+    "prisma:studio": "prisma studio",
+    "clean": "rm -rf .next dist node_modules"
+  },
+  "packageManager": "yarn@4.10.3+sha512.c38cafb5c7bb273f3926d04e55e1d8c9dfa7d9c3ea1f36a4868fa028b9e5f72298f0b7f401ad5eb921749eb012eb1c3bb74bf7503df3ee43fd600d14a018266f",
+  "dependencies": {
+    "@aws-sdk/dsql-signer": "^3.1068.0",
+    "@prisma/adapter-pg": "6",
+    "@prisma/client": "6",
+    "pg": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "@types/pg": "^8.20.0",
+    "prisma": "6",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
