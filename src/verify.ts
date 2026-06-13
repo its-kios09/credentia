@@ -11,8 +11,8 @@ const REGION = process.env.AWS_REGION ?? null;
 
 /**
  * Verify a practitioner by registration number or license id.
- * Computes the real status from license data, logs an append-only
- * VerificationEvent, and returns the outcome.
+ * Computes the real status from license data, resolves the attesting
+ * regulator, logs an append-only VerificationEvent, and returns the outcome.
  */
 export async function verifyCredential(
   queryValue: string,
@@ -22,6 +22,7 @@ export async function verifyCredential(
   practitionerId: string | null;
   fullName: string | null;
   licenseId: string | null;
+  attestedBy: { code: string; name: string; country: string } | null;
 }> {
   let practitioner = await prisma.practitioner.findUnique({
     where: { registrationId: queryValue },
@@ -65,6 +66,24 @@ export async function verifyCredential(
     else result = "expired";
   }
 
+  // resolve the attesting regulator from the practitioner's licenses
+  let attestedBy:
+    | { code: string; name: string; country: string }
+    | null = null;
+  if (practitioner) {
+    const lic = await prisma.license.findFirst({
+      where: { practitionerId: practitioner.id, issuerId: { not: null } },
+    });
+    if (lic?.issuerId) {
+      const reg = await prisma.regulatoryBody.findUnique({
+        where: { code: lic.issuerId },
+      });
+      if (reg) {
+        attestedBy = { code: reg.code, name: reg.name, country: reg.country };
+      }
+    }
+  }
+
   await prisma.verificationEvent.create({
     data: {
       practitionerId: practitioner?.id ?? null,
@@ -81,5 +100,6 @@ export async function verifyCredential(
     practitionerId: practitioner?.id ?? null,
     fullName: practitioner?.fullName ?? null,
     licenseId: matchedLicenseId,
+    attestedBy,
   };
 }
