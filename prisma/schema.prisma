@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Practitioner {
+  id                  String   @id @default(uuid()) @db.Uuid
+  puid                String   @unique
+  registrationId      String   @unique @map("registration_id")
+  externalReferenceId String?  @map("external_reference_id")
+  firstName           String   @map("first_name")
+  middleName          String?  @map("middle_name")
+  lastName            String   @map("last_name")
+  fullName            String   @map("full_name")
+  gender              String?
+  licensingBody       String   @map("licensing_body")
+  specialty           String?
+  isActive            Boolean  @default(true) @map("is_active")
+  version             Int      @default(0)
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("practitioners")
+}
