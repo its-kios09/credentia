@@ -67,3 +67,16 @@ model RegulatoryBody {
 
   @@map("regulatory_bodies")
 }
+
+model Verifier {
+  id           String   @id @default(uuid()) @db.Uuid
+  orgName      String   @map("org_name")
+  apiKeyHash   String   @unique @map("api_key_hash")
+  keyPrefix    String   @map("key_prefix")
+  plan         String   @default("free")
+  monthlyQuota Int      @default(100) @map("monthly_quota")
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("verifiers")
+}
