@@ -26,3 +26,19 @@ model Practitioner {
 
   @@map("practitioners")
 }
+
+model License {
+  id                  String   @id @default(uuid()) @db.Uuid
+  practitionerId      String   @map("practitioner_id") @db.Uuid
+  licenseId           String   @unique @map("license_id")
+  externalReferenceId String?  @map("external_reference_id")
+  licenseType         String   @map("license_type")
+  licenseStart        DateTime @map("license_start") @db.Date
+  licenseEnd          DateTime @map("license_end") @db.Date
+  status              String   @default("active")
+  version             Int      @default(0)
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("licenses")
+}
