@@ -42,3 +42,16 @@ model License {
 
   @@map("licenses")
 }
+
+model VerificationEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  practitionerId String?  @map("practitioner_id") @db.Uuid
+  licenseId      String?  @map("license_id")
+  queryValue     String   @map("query_value")
+  result         String
+  region         String?
+  verifierId     String?  @map("verifier_id") @db.Uuid
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("verification_events")
+}
