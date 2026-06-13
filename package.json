@@ -44,11 +44,16 @@
     "@aws-sdk/dsql-signer": "^3.1068.0",
     "@prisma/adapter-pg": "6",
     "@prisma/client": "6",
-    "pg": "^8.21.0"
+    "next": "^16.2.9",
+    "pg": "^8.21.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
     "@types/pg": "^8.20.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "dotenv": "^17.4.2",
     "prisma": "6",
     "tsx": "^4.22.4",

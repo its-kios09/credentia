@@ -23,7 +23,6 @@ export async function verifyCredential(
   fullName: string | null;
   licenseId: string | null;
 }> {
-  // 1. find the practitioner: by registration id, or via a license id
   let practitioner = await prisma.practitioner.findUnique({
     where: { registrationId: queryValue },
   });
@@ -42,7 +41,6 @@ export async function verifyCredential(
     }
   }
 
-  // 2. compute the result
   let result: VerifyResult;
 
   if (!practitioner) {
@@ -67,7 +65,6 @@ export async function verifyCredential(
     else result = "expired";
   }
 
-  // 3. log the event (append-only)
   await prisma.verificationEvent.create({
     data: {
       practitionerId: practitioner?.id ?? null,
