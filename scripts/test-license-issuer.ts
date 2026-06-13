@@ -16,9 +16,11 @@ async function main() {
   const license = await prisma.license.findFirst({
     where: { practitionerId: p.id },
   });
-  const regulator = license
-    ? await prisma.regulatoryBody.findUnique({ where: { code: license.issuerId } })
-    : null;
+const regulator = license?.issuerId
+  ? await prisma.regulatoryBody.findUnique({
+      where: { code: license.issuerId },
+    })
+  : null;
 
   console.log("\nlicense:", license?.licenseId);
   console.log("attested by:", regulator?.name, `(${regulator?.country})`);
